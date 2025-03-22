@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { jwtDecode } from 'jwt-decode';  
 import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; // Corrected import!
 
 const Events = () => {
   const [events, setEvents] = useState([]);
-  const token = localStorage.getItem("token");
-  const decoded = token ? jwtDecode(token) : null;
-  const userRole = decoded?.role;
+  const [userRole, setUserRole] = useState(null); // State for storing user role clearly
 
   useEffect(() => {
+    // Load events from backend
     axios.get("http://localhost:8000/api/events")
       .then(res => setEvents(res.data))
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
+
+    // Retrieve token from localStorage
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const decoded = jwtDecode(token);
+      setUserRole(decoded.role);
+    } else {
+      setUserRole(null); // explicitly set role to null if no token
+    }
   }, []);
 
   const joinEvent = async (id) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You must log in first!");
+      return;
+    }
+
     await axios.post(`http://localhost:8000/api/events/${id}/join`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -24,6 +39,7 @@ const Events = () => {
 
   return (
     <div className="p-6">
+      {/* 👇 Clearly Conditional rendering only for admins */}
       {userRole === "admin" && (
         <div className="text-center mb-4">
           <Link
@@ -47,8 +63,6 @@ const Events = () => {
       ))}
     </div>
   );
-
-  
 };
 
 export default Events;
