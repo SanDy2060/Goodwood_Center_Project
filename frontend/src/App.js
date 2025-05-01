@@ -14,31 +14,32 @@ import Register from './pages/Register';
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import AdminEvents from "./pages/AdminEvents";
-
+import Footer from './components/Footer';
 
 function App() {
-    return (
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/AboutUs" element={<AboutUs/>}/>
-          <Route path="/WhatWeDO" element={<WhatWeDo/>}/>
-          <Route path="/Events" element={<Events/>}/>
-          <Route path="/Gallery" element={<Gallery/>}/>
-          <Route path="/CommunityEngagement" element={<CommunityEngagement/>}/>
-          <Route path="/ContactUs" element={<ContactUs/>}/>
-          <Route path="/MembershipDonation" element={<MembershipDonation/>}/>
-          <Route path="/Login" element={<Login/>} />
-          <Route path="/Register" element={<Register/>} />
-          <Route path="/dashboard" element={
-          <PrivateRoute> <Dashboard /> </PrivateRoute>} />
-          <Route path="/Admin/Events" element={<AdminEvents />} />
-
-        </Routes>
-      </Router>
-    );
-
-};
+  return (
+    <Router>
+      <div id='root'>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/WhatWeDO" element={<WhatWeDo />} />
+        <Route path="/Events" element={<Events />} />
+        <Route path="/Gallery" element={<Gallery />} />
+        <Route path="/CommunityEngagement" element={<CommunityEngagement />} />
+        <Route path="/ContactUs" element={<ContactUs />} />
+        <Route path="/MembershipDonation" element={<MembershipDonation />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
+        <Route path="/admin/events" element={<AdminEvents />} />
+      </Routes>
+      </div>
+      <Footer />
+    </Router>
+    
+  );
+}
 
 export default App;

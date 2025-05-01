@@ -1,68 +1,140 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; // Corrected import!
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
-const Events = () => {
+const AdminEvents = () => {
   const [events, setEvents] = useState([]);
-  const [userRole, setUserRole] = useState(null); // State for storing user role clearly
+  const [event, setEvent] = useState({ title: "", description: "", date: "", location: "" });
+  const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Load events from backend
-    axios.get("http://localhost:8000/api/events")
-      .then(res => setEvents(res.data))
-      .catch(err => console.error(err));
-
-    // Retrieve token from localStorage
     const token = localStorage.getItem("token");
 
-    if (token) {
-      const decoded = jwtDecode(token);
-      setUserRole(decoded.role);
-    } else {
-      setUserRole(null); // explicitly set role to null if no token
-    }
-  }, []);
-
-  const joinEvent = async (id) => {
-    const token = localStorage.getItem("token");
     if (!token) {
-      alert("You must log in first!");
+      navigate("/login");
       return;
     }
 
-    await axios.post(`http://localhost:8000/api/events/${id}/join`, {}, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    alert("Joined event!");
+    try {
+      const decoded = jwtDecode(token);
+      if (decoded.role !== "admin") {
+        navigate("/");
+        return;
+      }
+      setIsAdmin(true);
+
+      axios.get("http://localhost:8000/api/events")
+        .then(res => {
+          setEvents(res.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error("Error loading events", err);
+          setLoading(false);
+        });
+    } catch (err) {
+      console.error("Token decode error:", err);
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+
+    formData.append("title", event.title);
+    formData.append("description", event.description);
+    formData.append("date", event.date);
+    formData.append("location", event.location);
+    if (image) formData.append("image", image);
+
+    try {
+      const res = await axios.post("http://localhost:8000/api/events", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("Event created!");
+      setEvents([...events, res.data]);  // Include the event data including image
+    } catch (err) {
+      console.error("Error creating event:", err);
+      alert("Failed to create event");
+    }
   };
+
+  const deleteEvent = async (id) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      await axios.delete(`http://localhost:8000/api/events/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setEvents(events.filter(event => event._id !== id));
+      alert("Event deleted!");
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("Failed to delete event");
+    }
+  };
+
+  if (loading) return <div className="p-6 text-center">Loading...</div>;
+  if (!isAdmin) return null;
 
   return (
     <div className="p-6">
-      {/* 👇 Clearly Conditional rendering only for admins */}
-      {userRole === "admin" && (
-        <div className="text-center mb-4">
-          <Link
-            to="/admin/events"
-            className="inline-block bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700"
-          >
-            Add or Remove Events
-          </Link>
-        </div>
-      )}
+      <h2 className="text-xl font-bold mb-4">Add New Event</h2>
+      <form onSubmit={handleSubmit} className="space-y-4 mb-6" encType="multipart/form-data">
+        <input type="text" placeholder="Title" required className="border p-2 w-full"
+          onChange={e => setEvent({ ...event, title: e.target.value })} />
+        <textarea placeholder="Description" className="border p-2 w-full"
+          onChange={e => setEvent({ ...event, description: e.target.value })} />
+        <input type="date" required className="border p-2 w-full"
+          onChange={e => setEvent({ ...event, date: e.target.value })} />
+        <input type="text" placeholder="Location" className="border p-2 w-full"
+          onChange={e => setEvent({ ...event, location: e.target.value })} />
 
-      {events.map(event => (
-        <div key={event._id} className="mb-4 p-4 border rounded">
-          <h3 className="font-bold">{event.title}</h3>
-          <p>{event.description}</p>
-          <p>{new Date(event.date).toLocaleDateString()}</p>
-          <p>Location: {event.location}</p>
-          <button className="bg-green-500 text-white px-3 py-1 rounded"
-            onClick={() => joinEvent(event._id)}>Join Event</button>
+        {/* Image input */}
+        <input type="file" accept="image/*" className="border p-2 w-full"
+          onChange={(e) => setImage(e.target.files[0])} />
+
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+          Create Event
+        </button>
+      </form>
+
+      <h2 className="text-xl font-bold mb-4">Existing Events</h2>
+      {events.map(ev => (
+        <div key={ev._id} className="border p-4 mb-3 rounded shadow-sm">
+          <h3 className="font-bold">{ev.title}</h3>
+          <p>{ev.description}</p>
+          <p>Date: {new Date(ev.date).toLocaleDateString()}</p>
+          <p>Location: {ev.location}</p>
+          
+          {/* Conditionally render the image using the correct field */}
+          {ev.image && (
+            <img 
+              src={`http://localhost:8000${ev.image}`} 
+              alt={ev.title} 
+              className="w-64 mt-2 rounded" 
+            />
+          )}
+          
+          <button
+            onClick={() => deleteEvent(ev._id)}
+            className="mt-2 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+          >
+            Delete
+          </button>
         </div>
       ))}
     </div>
   );
 };
 
-export default Events;
+export default AdminEvents;

@@ -1,0 +1,115 @@
+/* Reset default styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: #F0F5FF;
+  color: white;
+  padding: 20px 20px;
+  border-bottom: 2px solid #dcdcdc;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between; /* Distribute space between items */
+  align-items: center; /* Align items vertically in the center */
+  color: black;
+  width: 100%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 1;
+  margin-left: 0px;
+}
+
+/* Language selector positioned on the same line */
+.language-selector {
+  margin-left: 20px; /* Adds space between the search bar and language selector */
+  border: 2px;
+  border-color: black;
+}
+
+.language-selector select {
+  margin-top: 43px;
+  padding: 8px;
+  font-size: 16px;
+  background-color:  rgba(240, 245, 255, 1);
+  border-color: black;
+  border-radius: 4px;
+}
+
+/* Center the search bar between the logo and language translation */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute; /* Position it absolutely */
+  left: 50%; /* Position from the left 50% */
+  transform: translateX(-50%); /* Move it back by 50% of its width to truly center */
+  z-index: 1; /* Ensure it sits above the navbar */
+}
+
+.search-bar .material-symbols-outlined {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.search-bar input {
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  width: 500px;
+}
+
+/* Navbar links */
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0px;
+  padding: 0 10px;
+}
+
+.nav-links a {
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+  margin-right: 30px;
+  font-weight: normal;
+  transition: underline;
+}
+
+.nav-links a:hover {
+  color: #0d8e2c;
+}
+
+.nav-links .active {
+  font-weight: bold;
+  color: #0d8e2c;
+}
+
+/* Log In Button */
+.nav-links a:last-child {
+  font-weight: normal;
+  color: #0d8e2c;
+}
+
+.nav-links a:last-child:hover {
+  color: #0d8e2c;
+}

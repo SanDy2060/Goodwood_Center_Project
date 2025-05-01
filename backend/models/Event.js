@@ -1,12 +1,17 @@
 const mongoose = require("mongoose");
 
-const EventSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: String,
-  date: { type: Date, required: true },
-  location: String,
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
-}, { timestamps: true });
+// Define the Event schema
+const eventSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true }, // Title of the event
+    description: { type: String, required: true }, // Description of the event
+    date: { type: Date, required: true }, // Date of the event
+    location: { type: String, required: true }, // Location of the event
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // User who created the event
+    image: { type: String, default: null }, // The image URL (new field)
+  },
+  { timestamps: true } // Automatically adds createdAt and updatedAt fields
+);
 
-module.exports = mongoose.model("Event", EventSchema);
+// Export the model
+module.exports = mongoose.model("Event", eventSchema);
