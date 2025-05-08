@@ -53,9 +53,14 @@ const Header = () => {
         <NavLink to="/membershipDonation" className={({ isActive }) => isActive ? "active" : ""}>
           Membership & Donation
         </NavLink>
-        <NavLink to="/login" className={({ isActive }) => isActive ? "active" : ""}>
-          Log In
-        </NavLink>
+        <div className="nav-dropdown">
+       <span className="dropdown-label">Login/Register ▾</span>
+       <div className="dropdown-menu">
+      <NavLink to="/login" className={({ isActive }) => isActive ? "active" : ""}>Log In</NavLink>
+      <NavLink to="/register" className={({ isActive }) => isActive ? "active" : ""}>Register</NavLink>
+      </div>
+      </div>
+
       </div>
     </header>
   );

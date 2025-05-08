@@ -15,6 +15,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import AdminEvents from "./pages/AdminEvents";
 import Footer from './components/Footer';
+import EventDetails from './pages/EventDetail';
+
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/WhatWeDO" element={<WhatWeDo />} />
         <Route path="/Events" element={<Events />} />
+        <Route path="/event/:id" element={<EventDetails />} />
         <Route path="/Gallery" element={<Gallery />} />
         <Route path="/CommunityEngagement" element={<CommunityEngagement />} />
         <Route path="/ContactUs" element={<ContactUs />} />
@@ -35,8 +38,8 @@ function App() {
         <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
         <Route path="/admin/events" element={<AdminEvents />} />
       </Routes>
-      </div>
       <Footer />
+      </div>
     </Router>
     
   );

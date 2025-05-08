@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import "../styles/events.css"; 
 
 // Helper function to translate text
 const translateText = async (text, targetLang = "en") => {
@@ -69,12 +70,12 @@ const Events = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="events-container">
       {userRole === "admin" && (
         <div className="text-center mb-4">
           <Link
             to="/admin/events"
-            className="inline-block bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700"
+            className="add-event-button"
           >
             Add or Remove Events
           </Link>
@@ -82,12 +83,12 @@ const Events = () => {
       )}
 
       {/* Language Selector */}
-      <div className="mb-6">
-        <label className="mr-2 font-medium">Translate to:</label>
+      <div className="language-selector">
+        <label className="language-label">Translate to:</label>
         <select
           value={language}
           onChange={handleLanguageChange}
-          className="border p-2 rounded"
+          className="language-dropdown"
         >
           <option value="en">English</option>
           <option value="es">Spanish</option>
@@ -99,9 +100,11 @@ const Events = () => {
       </div>
 
       {/* Display Events */}
-      {events.map((event) => (
-        <EventCard key={event._id} event={event} language={language} joinEvent={joinEvent} />
-      ))}
+      <div className="events-list">
+        {events.map((event) => (
+          <EventCard key={event._id} event={event} language={language} joinEvent={joinEvent} />
+        ))}
+      </div>
     </div>
   );
 };
@@ -124,25 +127,20 @@ const EventCard = ({ event, language, joinEvent }) => {
   }, [event.description, language]);
 
   return (
-    <div className="mb-4 p-4 border rounded shadow-md bg-white">
-      <h3 className="text-xl font-bold mb-1">{event.title}</h3>
-      {/* Render image if available */}
-      {event.image && (
-        <img
-          src={`http://localhost:8000${event.image}`}
-          alt={event.title}
-          className="w-full h-auto rounded mb-3"
-        />
-      )}
-      <p className="mb-1">{translatedDesc}</p>
-      <p className="text-sm text-gray-600 mb-1">{new Date(event.date).toLocaleDateString()}</p>
-      <p className="text-sm text-gray-600 mb-2">Location: {event.location}</p>
-      <button
-        onClick={() => joinEvent(event._id)}
-        className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
-      >
-        Join Event
-      </button>
+    <div className="event-card">
+      <div className="event-image">
+        <img src={`http://localhost:8000${event.image}`} alt={event.title} />
+      </div>
+      <div className="event-info">
+        <h3 className="event-title">{event.title}</h3>
+        <p className="event-description">{translatedDesc}</p>
+        <p className="event-time">Duration: {event.duration} hr</p>
+        <p className="event-cost">Cost: ${event.cost}</p>
+        {/* Wrap the button with Link to navigate to the event details page */}
+      <Link to={`/event/${event._id}`} className="join-button">
+        View Event Details
+      </Link>
+      </div>
     </div>
   );
 };

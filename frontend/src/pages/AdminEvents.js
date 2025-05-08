@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import "../styles/adminEvents.css"; // Ensure the CSS is updated
 
 const AdminEvents = () => {
   const [events, setEvents] = useState([]);
-  const [event, setEvent] = useState({ title: "", description: "", date: "", location: "" });
+  const [event, setEvent] = useState({ title: "", description: "", date: "", location: "", price: 0 });
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -51,6 +52,7 @@ const AdminEvents = () => {
     formData.append("description", event.description);
     formData.append("date", event.date);
     formData.append("location", event.location);
+    formData.append("price", event.price);
     if (image) formData.append("image", image);
 
     try {
@@ -61,7 +63,7 @@ const AdminEvents = () => {
         },
       });
       alert("Event created!");
-      setEvents([...events, res.data]);  // Include the event data including image
+      setEvents([...events, res.data]);
     } catch (err) {
       console.error("Error creating event:", err);
       alert("Failed to create event");
@@ -83,56 +85,55 @@ const AdminEvents = () => {
     }
   };
 
-  if (loading) return <div className="p-6 text-center">Loading...</div>;
+  if (loading) return <div className="text-center">Loading...</div>;
   if (!isAdmin) return null;
 
   return (
-    <div className="p-6">
-      <h2 className="text-xl font-bold mb-4">Add New Event</h2>
-      <form onSubmit={handleSubmit} className="space-y-4 mb-6" encType="multipart/form-data">
-        <input type="text" placeholder="Title" required className="border p-2 w-full"
-          onChange={e => setEvent({ ...event, title: e.target.value })} />
-        <textarea placeholder="Description" className="border p-2 w-full"
-          onChange={e => setEvent({ ...event, description: e.target.value })} />
-        <input type="date" required className="border p-2 w-full"
-          onChange={e => setEvent({ ...event, date: e.target.value })} />
-        <input type="text" placeholder="Location" className="border p-2 w-full"
-          onChange={e => setEvent({ ...event, location: e.target.value })} />
+    <div className="admin-events-container">
+      <div className="admin-event-form-container">
+        <h2 className="admin-heading">Add New Event</h2>
+        <form onSubmit={handleSubmit} className="admin-event-form">
+          <input type="text" placeholder="Title" required className="input-field"
+            onChange={e => setEvent({ ...event, title: e.target.value })} />
+          <textarea placeholder="Description" className="input-field"
+            onChange={e => setEvent({ ...event, description: e.target.value })} />
+          <input type="date" required className="input-field"
+            onChange={e => setEvent({ ...event, date: e.target.value })} />
+          <input type="text" placeholder="Location" className="input-field"
+            onChange={e => setEvent({ ...event, location: e.target.value })} />
+          <input type="number" placeholder="Price" className="input-field"
+            min="0" onChange={e => setEvent({ ...event, price: e.target.value })} />
+          <input type="file" accept="image/*" className="input-field"
+            onChange={(e) => setImage(e.target.files[0])} />
+          <button type="submit" className="submit-button">Create Event</button>
+        </form>
+      </div>
 
-        {/* Image input */}
-        <input type="file" accept="image/*" className="border p-2 w-full"
-          onChange={(e) => setImage(e.target.files[0])} />
-
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-          Create Event
-        </button>
-      </form>
-
-      <h2 className="text-xl font-bold mb-4">Existing Events</h2>
-      {events.map(ev => (
-        <div key={ev._id} className="border p-4 mb-3 rounded shadow-sm">
-          <h3 className="font-bold">{ev.title}</h3>
-          <p>{ev.description}</p>
-          <p>Date: {new Date(ev.date).toLocaleDateString()}</p>
-          <p>Location: {ev.location}</p>
-          
-          {/* Conditionally render the image using the correct field */}
-          {ev.image && (
-            <img 
-              src={`http://localhost:8000${ev.image}`} 
-              alt={ev.title} 
-              className="w-64 mt-2 rounded" 
-            />
-          )}
-          
-          <button
-            onClick={() => deleteEvent(ev._id)}
-            className="mt-2 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-          >
-            Delete
-          </button>
-        </div>
-      ))}
+      <h2 className="admin-heading">Existing Events</h2>
+      <div className="admin-events-list">
+        {events.map(ev => (
+          <div key={ev._id} className="event-card">
+            <div className="event-image">
+              {ev.image && (
+                <img 
+                  src={`http://localhost:8000${ev.image}`} 
+                  alt={ev.title} 
+                  className="event-img" 
+                />
+              )}
+            </div>
+            <div className="event-info">
+              <h3 className="event-title">{ev.title}</h3>
+              <p className="event-description">{ev.description}</p>
+              <p className="event-date">Date: {new Date(ev.date).toLocaleDateString()}</p>
+              <p className="event-location">Location: {ev.location}</p>
+              <p className="event-price">Price: {ev.price === 0 ? "Free" : `$${ev.price}`}</p>
+              <button className="join-button">Join Event</button> {/* Added Join Button */}
+              <button onClick={() => deleteEvent(ev._id)} className="delete-button">Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

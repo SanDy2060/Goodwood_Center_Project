@@ -9,6 +9,11 @@ const eventSchema = new mongoose.Schema(
     location: { type: String, required: true }, // Location of the event
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // User who created the event
     image: { type: String, default: null }, // The image URL (new field)
+    price: { 
+      type: Number, 
+      default: 0,  // Set default to 0 if the event is free
+      required: true 
+    },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );

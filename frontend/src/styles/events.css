@@ -1,0 +1,64 @@
+/* Event Card Styles */
+.event-card {
+  display: flex;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  padding: 20px;
+  align-items: center;
+  width: 100%;  /* Ensures cards use full available space */
+  max-width: 1200px; /* Adjust for larger cards */
+  margin: 20px auto;  /* Center cards and add spacing */
+}
+
+.event-image img {
+  max-width: 450px; /* Increase image width */
+  height: auto;
+  border-radius: 10px;
+}
+
+.event-info {
+  flex-grow: 1;
+  padding-left: 20px;
+}
+
+.event-title {
+  font-size: 28px; /* Larger font for titles */
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.event-description {
+  font-size: 18px; /* Increase description font size */
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.event-details {
+  font-size: 18px; /* Larger font for time and cost */
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.event-time,
+.event-cost {
+  margin-bottom: 10px;
+}
+
+.join-button {
+  background-color: #3465A2;
+  color: white;
+  padding: 15px 25px; /* Larger button padding */
+  font-size: 18px; /* Bigger font size for button */
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 15px;  /* Added space before button */
+}
+
+.join-button:hover {
+  background-color: #0d8e2c;
+}
