@@ -14,6 +14,7 @@ const eventSchema = new mongoose.Schema(
       default: 0,  // Set default to 0 if the event is free
       required: true 
     },
+    likes: { type: Number, default: 0 },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );

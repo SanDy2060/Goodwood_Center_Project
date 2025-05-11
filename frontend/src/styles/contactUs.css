@@ -1,0 +1,108 @@
+body {
+  font-family: "EB Garamond", serif;
+  background-color: #f5f7fc;
+}
+
+/* Page Title */
+.contact-header {
+  text-align: center;
+  padding: 50px 0 30px;
+}
+
+.contact-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Wrapper Layout */
+.contact-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+/* Left Section */
+.contact-left {
+  flex: 1;
+  max-width: 50%;
+}
+
+.contact-left h2 {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.contact-left p {
+  margin-top: 10px;
+  color: #333;
+  font-size: 1rem;
+}
+
+.contact-photo {
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+/* Right Section */
+.contact-right {
+  flex: 1;
+  max-width: 50%;
+}
+
+.contact-right form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-right label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #000;
+}
+
+.contact-right input,
+.contact-right textarea {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #000;
+  background-color: transparent;
+  font-size: 1rem;
+  outline: none;
+  font-family: "EB Garamond", serif;
+}
+
+.contact-right textarea {
+  resize: none;
+}
+
+.contact-right input:focus,
+.contact-right textarea:focus {
+  border-bottom: 2px solid #005f73;
+}
+
+/* Submit Button */
+.contact-submit-btn {
+  width: fit-content;
+  margin-top: 30px;
+  padding: 10px 30px;
+  background-color: transparent;
+  color: #005f73;
+  border: 1px solid #005f73;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.contact-submit-btn:hover {
+  background-color: #005f73;
+  color: white;
+}

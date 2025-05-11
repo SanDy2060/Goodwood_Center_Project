@@ -24,6 +24,7 @@ const corsOptions = {
 app.use(cors(corsOptions));  // Apply CORS options
 app.use(express.json());  // Middleware to parse JSON bodies
 app.use("/api/event", require("./routes/eventRegistration"));
+app.use("/api/events", require("./routes/events"));
 
 // MongoDB Connection using the URI from .env
 mongoose.connect(process.env.MONGO_URI)

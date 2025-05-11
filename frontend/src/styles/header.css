@@ -5,19 +5,19 @@
   box-sizing: border-box;
 }
 
-/* Navbar styles */
+/* Navbar container */
 .navbar {
   background-color: #F0F5FF;
-  color: white;
-  padding: 20px 20px;
+  padding: 20px;
   border-bottom: 2px solid #dcdcdc;
+  position: relative;
 }
 
+/* Top row: logo + language selector + search */
 .navbar-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: black;
   width: 100%;
 }
 
@@ -34,40 +34,33 @@
 
 .logo-text {
   font-size: 20px;
-  font-weight: 1;
-  margin-left: 0px;
+  font-weight: 500;
+  margin-left: 10px;
+  color: black;
 }
 
-/* Language selector positioned on the same line */
+/* Language selector */
 .language-selector {
   margin-left: 20px;
-  border: 2px;
-  border-color: black;
 }
 
 .language-selector select {
-  margin-top: 43px;
   padding: 8px;
   font-size: 16px;
-  background-color: rgba(240, 245, 255, 1);
-  border-color: black;
+  background-color: #F0F5FF;
+  border: 1px solid black;
   border-radius: 4px;
 }
 
-/* Center the search bar between the logo and language translation */
+/* Centered search bar */
 .search-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
   z-index: 1;
-}
-
-.search-bar .material-symbols-outlined {
-  font-size: 24px;
-  margin-right: 8px;
 }
 
 .search-bar input {
@@ -78,25 +71,36 @@
   width: 500px;
 }
 
-/* Navbar links */
+/* Bottom nav links row */
 .nav-links {
   display: flex;
-  justify-content: space-between;
-  margin-top: 0px;
-  padding: 0 10px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
-.nav-links a {
+/* Nav links and logout button styled identically */
+.nav-links a,
+.nav-links .logout-btn {
   color: black;
   text-decoration: none;
   font-size: 18px;
-  margin-right: 30px;
+  margin: 0 15px;
   font-weight: normal;
-  transition: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 0;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links .logout-btn:hover {
   color: #0d8e2c;
+  text-decoration: underline;
 }
 
 .nav-links .active {
@@ -107,22 +111,13 @@
 /* Login/Register Dropdown */
 .nav-dropdown {
   position: relative;
-  margin-right: 30px;
   font-size: 18px;
   font-weight: normal;
   color: black;
-  display: flex;
-  align-items: center;
-}
-
-.nav-dropdown:hover .dropdown-label {
-  color: #0d8e2c;
 }
 
 .dropdown-label {
   cursor: pointer;
-  display: block;
-  text-decoration: none;
 }
 
 .dropdown-menu {
@@ -136,7 +131,6 @@
   z-index: 1;
   border-radius: 6px;
   overflow: hidden;
-  transition: opacity 0.2s ease;
 }
 
 .dropdown-menu a {
