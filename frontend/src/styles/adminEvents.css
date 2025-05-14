@@ -1,0 +1,189 @@
+/* Admin Events Page Styles */
+.admin-events-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-heading {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.event-card {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  padding: 20px;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.event-image {
+  flex-basis: 40%;
+  margin-right: 20px;
+}
+
+.event-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.event-info {
+  flex-grow: 1;
+}
+
+.event-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.event-description {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.event-date,
+.event-location,
+.event-price {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.event-price {
+  font-weight: bold;
+  color: #ff5722;
+}
+
+
+.join-button {
+  margin-top: 20px;
+  background-color:  #3465A2;
+  color: white;
+  padding: 6px 12px;         /* 🔽 Smaller padding */
+  font-size: 14px;           /* 🔽 Smaller text */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  max-width: 120px;          /* ✅ Optional: limit width */
+  text-align: center;
+}
+
+
+
+.join-button:hover {
+  background-color: #0d8e2c;
+  
+}
+
+.delete-button {
+  background-color: #e53e3e;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.delete-button:hover {
+  background-color: #c53030;
+}
+
+/* Event Form Styles */
+.admin-event-form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.submit-button {
+  background-color: #3465A2;
+  color: white;
+  padding: 15px 25px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #0d8e2c;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .event-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .event-img {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .event-info {
+    text-align: center;
+  }
+
+  .submit-button {
+    margin-top: 15px;
+  }
+
+  .admin-event-form-container {
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .event-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .event-img {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .event-info {
+    text-align: center;
+  }
+
+  .submit-button {
+    margin-top: 15px;
+  }
+
+  .admin-event-form-container {
+    padding: 15px;
+  }
+}

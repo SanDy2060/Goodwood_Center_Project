@@ -1,0 +1,108 @@
+/* General footer styling */
+.footer {
+  background-color: #1d3048;
+  color: white;
+  padding: 40px 60px;
+  text-align: center;
+  position: relative;
+  margin-top: auto;
+}
+
+/* Footer layout */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Footer sections */
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1;
+  min-width: 250px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.footer-left h2,
+.footer-right h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.footer-left p,
+.footer-center p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 4px 0;
+}
+
+/* Logo styling */
+.footer-center {
+  text-align: center;
+}
+
+.footer-center img {
+  width: 120px;
+  height: auto;
+  margin-top: 10px;
+}
+
+/* Social media icons */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 22px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #0d8e2c;
+}
+
+/* Ensure full height page structure */
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main {
+  flex-grow: 1;
+  padding-bottom: 40px;
+}
+
+/* Responsive layout */
+@media screen and (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    min-width: 100%;
+    padding: 15px 0;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}

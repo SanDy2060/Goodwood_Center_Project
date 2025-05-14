@@ -1,0 +1,151 @@
+/* Reset default styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar container */
+.navbar {
+  background-color: #F0F5FF;
+  padding: 20px;
+  border-bottom: 2px solid #dcdcdc;
+  position: relative;
+}
+
+/* Top row: logo + language selector + search */
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 10px;
+  color: black;
+}
+
+/* Language selector */
+.language-selector {
+  margin-left: 20px;
+}
+
+.language-selector select {
+  padding: 8px;
+  font-size: 16px;
+  background-color: #F0F5FF;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+/* Centered search bar */
+.search-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.search-bar input {
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  width: 500px;
+}
+
+/* Bottom nav links row */
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Nav links and logout button styled identically */
+.nav-links a,
+.nav-links .logout-btn {
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 0 15px;
+  font-weight: normal;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.nav-links a:hover,
+.nav-links .logout-btn:hover {
+  color: #18083b;
+  text-decoration: underline;
+}
+
+.nav-links .active {
+  font-weight: bold;
+  color: #14144b;
+}
+
+/* Login/Register Dropdown */
+.nav-dropdown {
+  position: relative;
+  font-size: 18px;
+  font-weight: normal;
+  color: black;
+}
+
+.dropdown-label {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  top: 100%;
+  left: 0;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  color: black;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0f0f0;
+  color: #0d8e2c;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  display: block;
+}

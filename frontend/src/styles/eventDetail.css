@@ -1,0 +1,140 @@
+/* frontend/src/pages/EventDetail.css */
+
+.event-details-container {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+}
+
+.event-layout {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  width: 100%;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.event-image {
+  flex: 1 1 40%;
+  min-width: 300px;
+  max-height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+
+.event-info {
+  flex: 1 1 60%;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.event-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.event-description {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.event-info p {
+  margin: 8px 0;
+  color: #333;
+}
+
+
+
+.join-button-small {
+  background-color: #0d8e2c;
+  color: white;
+  padding: 4px 10px;        /* smaller padding */
+  font-size: 12px;          /* smaller text size */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.join-button-small:hover {
+  background-color: #0a6f23;
+}
+
+
+
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal-form input,
+.modal-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.modal-form button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  background: #0d8e2c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  
+}
+
+.modal-form button:hover {
+  background: #0a6f23;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .event-layout {
+    flex-direction: column;
+  }
+
+  .event-image {
+    max-height: 250px;
+  }
+}

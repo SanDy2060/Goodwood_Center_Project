@@ -1,0 +1,17 @@
+﻿# Dependency folders
+node_modules/
+build/
+dist/
+
+# System & editor files
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
+*.tmp
+*.swp
+*.bak
+
+# Windows user folders accidentally being tracked
+../../../../*
+!./*
