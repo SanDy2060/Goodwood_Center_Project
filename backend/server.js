@@ -5,21 +5,36 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-
 const app = express();
 
 app.use((req, res, next) => {
   console.log(`📥 ${req.method} ${req.url}`);
   next();
 });
-// Middleware to handle CORS errors
 
-// CORS Configuration: Allow frontend (port 3000) to make requests to backend (port 8000)
+
+// Allowed origins for CORS
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://mywebsite.com"
+];
+
 const corsOptions = {
-  origin: "http://localhost:3000",  // Allow frontend requests from this URL
+  origin: function(origin, callback){
+    // Allow requests with no origin (like curl or Postman)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+
+
 
 app.use(cors(corsOptions));  // Apply CORS options
 app.use(express.json());  // Middleware to parse JSON bodies

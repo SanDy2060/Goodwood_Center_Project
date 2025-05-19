@@ -14,8 +14,11 @@ import Register from './pages/Register';
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import AdminEvents from "./pages/AdminEvents";
+import Chatbot from './components/Chatbot';
 import Footer from './components/Footer';
 import EventDetails from './pages/EventDetail';
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 
 function App() {
@@ -37,7 +40,10 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
         <Route path="/admin/events" element={<AdminEvents />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+<Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
+      <Chatbot />
       <Footer />
       </div>
     </Router>
