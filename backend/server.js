@@ -25,6 +25,7 @@ app.use(cors(corsOptions));  // Apply CORS options
 app.use(express.json());  // Middleware to parse JSON bodies
 app.use("/api/event", require("./routes/eventRegistration"));
 app.use("/api/events", require("./routes/events"));
+app.use("/api/contact", require("./routes/contact"));
 
 // MongoDB Connection using the URI from .env
 mongoose.connect(process.env.MONGO_URI)
@@ -34,6 +35,7 @@ mongoose.connect(process.env.MONGO_URI)
 // Importing routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/events", require("./routes/events"));  // Event routes
+app.use("/api/contact", require("./routes/contact"));
 
 // Serve static files for image uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

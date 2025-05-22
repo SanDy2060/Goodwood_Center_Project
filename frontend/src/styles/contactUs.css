@@ -1,16 +1,18 @@
 body {
   font-family: "EB Garamond", serif;
   background-color: #f5f7fc;
+  margin: 0;
+  padding: 0;
 }
 
 /* Page Title */
 .contact-header {
   text-align: center;
-  padding: 50px 0 30px;
+  padding: 40px 20px 20px;
 }
 
 .contact-header h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: bold;
   margin: 0;
 }
@@ -18,21 +20,23 @@ body {
 /* Wrapper Layout */
 .contact-wrapper {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 0 5%;
-  gap: 60px;
+  gap: 40px;
   margin-bottom: 60px;
 }
 
 /* Left Section */
 .contact-left {
   flex: 1;
-  max-width: 50%;
+  min-width: 280px;
+  max-width: 48%;
 }
 
 .contact-left h2 {
   margin-top: 20px;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
 }
 
@@ -52,7 +56,8 @@ body {
 /* Right Section */
 .contact-right {
   flex: 1;
-  max-width: 50%;
+  min-width: 280px;
+  max-width: 48%;
 }
 
 .contact-right form {
@@ -105,4 +110,37 @@ body {
 .contact-submit-btn:hover {
   background-color: #005f73;
   color: white;
+}
+
+
+/* Default (desktop) styles */
+.contact-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 40px 80px;
+}
+
+.contact-left,
+.contact-right {
+  flex: 1;
+  max-width: 50%;
+}
+
+/* Responsive for tablet and mobile */
+@media (max-width: 768px) {
+  .contact-wrapper {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .contact-left,
+  .contact-right {
+    max-width: 100%;
+  }
+
+  iframe {
+    width: 100% !important;
+    height: auto;
+  }
 }
