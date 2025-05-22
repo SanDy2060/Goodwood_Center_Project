@@ -1,0 +1,93 @@
+/* register.css */
+
+.register-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f3f4f6; /* Tailwind bg-gray-100 */
+}
+
+.register-card {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Tailwind shadow-lg */
+  width: 100%;
+  max-width: 400px;
+}
+
+.register-title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.register-subtext {
+  text-align: center;
+  color: #6b7280; /* gray-500 */
+  font-size: 0.875rem;
+}
+
+.register-subtext a {
+  color: #2563eb; /* blue-600 */
+  text-decoration: underline;
+}
+
+.register-error {
+  color: #ef4444; /* red-500 */
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.input-group {
+  margin-top: 1rem;
+}
+
+.input-group label {
+  display: block;
+  color: #111827; /* gray-900 */
+  margin-bottom: 0.25rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+}
+
+.input-group input:focus {
+  border-color: #2563eb; /* blue-600 */
+}
+
+.password-hint {
+  color: #9ca3af; /* gray-400 */
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.register-button {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: bold;
+  background-color: #2563eb; /* blue-600 */
+  margin-top: 1.5rem;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.register-button:hover {
+  background-color: #1d4ed8; /* blue-700 */
+}
+
+.register-button:disabled {
+  background-color: #9ca3af; /* gray-400 */
+  cursor: not-allowed;
+}

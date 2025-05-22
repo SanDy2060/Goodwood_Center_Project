@@ -1,0 +1,67 @@
+/* Match Event Card Style for Services */
+
+.service-card {
+  display: flex;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  padding: 20px;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.service-image {
+  max-width: 450px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.service-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.service-info {
+  flex-grow: 1;
+  padding-left: 20px;
+}
+
+.service-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.service-description {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.service-day,
+.service-time,
+.service-spots {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.join-button {
+  background-color: #3465A2;
+  color: white;
+  padding: 15px 25px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+}
+
+.join-button:hover {
+  background-color: #0d8e2c;
+}
