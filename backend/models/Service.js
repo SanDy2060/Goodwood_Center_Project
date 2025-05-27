@@ -8,6 +8,7 @@ const serviceSchema = new mongoose.Schema({
   endTime: { type: String, required: true },
   maxSpots: { type: Number, default: null },
   image: { type: String, default: "" },
+  price: { type: Number, default: 0 },
   isActive: { type: Boolean, default: true },
   registrations: [
     {
@@ -22,6 +23,10 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     enum: ["regular", "hall"],
     default: "regular"
+  },
+  featured: {
+    type: Boolean,
+    default: false
   },
 });
   

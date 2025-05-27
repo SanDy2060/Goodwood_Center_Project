@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import "../styles/adminEvents.css"; // Reuse same styles
+import "../styles/adminEvents.css";
 
 const AdminServices = () => {
   const [services, setServices] = useState([]);
@@ -13,12 +13,12 @@ const AdminServices = () => {
     startTime: "",
     endTime: "",
     maxSpots: "",
+    price: "",
     image: null,
   });
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
-
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -39,8 +39,7 @@ const AdminServices = () => {
       console.error("Token error:", err);
       navigate("/login");
     }
-  },[navigate, token]);
-  
+  }, [navigate, token]);
 
   const fetchServices = async () => {
     try {
@@ -84,6 +83,7 @@ const AdminServices = () => {
         startTime: "",
         endTime: "",
         maxSpots: "",
+        price: "",
         image: null,
       });
       setServices([...services, res.data]);
@@ -96,9 +96,7 @@ const AdminServices = () => {
   const deleteService = async (id) => {
     try {
       await axios.delete(`http://localhost:8000/api/services/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setServices(services.filter(s => s._id !== id));
       alert("Service deleted");
@@ -116,62 +114,14 @@ const AdminServices = () => {
       <div className="admin-event-form-container">
         <h2 className="admin-heading">Add New Service</h2>
         <form onSubmit={handleSubmit} className="admin-event-form">
-          <input
-            type="text"
-            name="name"
-            placeholder="Service Name"
-            value={formData.name}
-            onChange={handleInputChange}
-            className="input-field"
-            required
-          />
-          <textarea
-            name="description"
-            placeholder="Description"
-            value={formData.description}
-            onChange={handleInputChange}
-            className="input-field"
-          />
-          <input
-            type="text"
-            name="dayOfWeek"
-            placeholder="Day (e.g., Monday)"
-            value={formData.dayOfWeek}
-            onChange={handleInputChange}
-            className="input-field"
-            required
-          />
-          <input
-            type="time"
-            name="startTime"
-            value={formData.startTime}
-            onChange={handleInputChange}
-            className="input-field"
-            required
-          />
-          <input
-            type="time"
-            name="endTime"
-            value={formData.endTime}
-            onChange={handleInputChange}
-            className="input-field"
-            required
-          />
-          <input
-            type="number"
-            name="maxSpots"
-            placeholder="Max Spots (optional)"
-            value={formData.maxSpots}
-            onChange={handleInputChange}
-            className="input-field"
-          />
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleInputChange}
-            className="input-field"
-          />
+          <input type="text" name="name" placeholder="Service Name" value={formData.name} onChange={handleInputChange} className="input-field" required />
+          <textarea name="description" placeholder="Description" value={formData.description} onChange={handleInputChange} className="input-field" />
+          <input type="text" name="dayOfWeek" placeholder="Day (e.g., Monday)" value={formData.dayOfWeek} onChange={handleInputChange} className="input-field" required />
+          <input type="time" name="startTime" value={formData.startTime} onChange={handleInputChange} className="input-field" required />
+          <input type="time" name="endTime" value={formData.endTime} onChange={handleInputChange} className="input-field" required />
+          <input type="number" name="maxSpots" placeholder="Max Spots (optional)" value={formData.maxSpots} onChange={handleInputChange} className="input-field" />
+          <input type="number" name="price" placeholder="Price (optional)" value={formData.price} onChange={handleInputChange} className="input-field" />
+          <input type="file" name="image" accept="image/*" onChange={handleInputChange} className="input-field" />
           <button type="submit" className="submit-button">Add Service</button>
         </form>
       </div>
@@ -193,13 +143,16 @@ const AdminServices = () => {
               <h3 className="event-title">{service.name}</h3>
               <p className="event-description">{service.description}</p>
               <p className="event-date"><strong>Day:</strong> {service.dayOfWeek}</p>
-              <p className="event-location">
-                <strong>Time:</strong> {service.startTime} – {service.endTime}
-              </p>
+              <p className="event-location"><strong>Time:</strong> {service.startTime} – {service.endTime}</p>
               {service.maxSpots && (
                 <p className="event-price"><strong>Spots:</strong> {service.maxSpots}</p>
               )}
-              <button onClick={() => deleteService(service._id)} className="delete-button">Delete</button>
+              {service.price && (
+                <p className="event-price"><strong>Price: $</strong> ${service.price}</p>
+              )}
+              <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                <button onClick={() => deleteService(service._id)} className="delete-button">Delete</button>
+              </div>
             </div>
           </div>
         ))}

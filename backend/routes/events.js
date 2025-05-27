@@ -115,17 +115,4 @@ router.get("/:id/comments", async (req, res) => {
   res.json(comments);
 });
 
-// 📌 Delete a comment (only by its owner)
-router.delete("/comments/:id", authMiddleware, async (req, res) => {
-  const comment = await Comment.findById(req.params.id);
-  if (!comment) return res.status(404).json({ msg: "Comment not found" });
-
-  if (comment.user.toString() !== req.user._id.toString()) {
-    return res.status(403).json({ msg: "Not authorized to delete this comment" });
-  }
-
-  await comment.deleteOne();
-  res.json({ msg: "Comment deleted" });
-});
-
 module.exports = router;

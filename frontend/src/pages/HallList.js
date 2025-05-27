@@ -31,7 +31,7 @@ const HallList = () => {
       {userRole === "admin" && (
         <div className="admin-hall-button-container">
           <Link to="/admin/halls">
-            <button className="create-hall-button">+ Create New Hall</button>
+            <button className="create-hall-button"> Manage Hall</button>
           </Link>
         </div>
       )}

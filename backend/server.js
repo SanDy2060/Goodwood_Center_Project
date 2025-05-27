@@ -42,7 +42,9 @@ app.use("/api/event", require("./routes/eventRegistration"));
 app.use("/api/contact", require("./routes/contact"));
 app.use("/api/services", require("./routes/services"));
 app.use("/api/service", require("./routes/serviceRegistration"));
-app.use("/api/halls", require("./routes/halls")); // ✅ Add this if using hall booking
+app.use("/api/halls", require("./routes/halls"));
+app.use("/api/comments", require("./routes/comments"));
+
 
 // ✅ Static uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

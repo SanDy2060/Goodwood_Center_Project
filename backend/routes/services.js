@@ -106,6 +106,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.patch('/:id/feature', async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id);
+    if (!service) return res.status(404).json({ msg: 'Service not found' });
+
+    service.featured = !service.featured; // <-- toggle the value
+    await service.save();
+
+    res.status(200).json(service);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 // 🔐 Update a service
 router.put("/:id", adminMiddleware, upload.single("image"), async (req, res) => {
   try {

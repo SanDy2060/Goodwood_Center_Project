@@ -5,36 +5,35 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <div className="footer-left">
-          <h2>Goodwood Community Centre</h2>
-          <p>04424242424</p>
-          <p>goodwCC@gmail.com</p>
+        {/* Logo on the far left */}
+        <div className="logo">
+          <img src="/Logo.png" alt="Goodwood Community Centre" />
         </div>
 
+        {/* Contact Info */}
+        <div className="footer-left">
+          <h2>Goodwood Community Centre</h2>
+          <p>62722560</p>
+          <p>manager@gwcc.org.au</p>
+        </div>
+
+        {/* Hours & Location */}
         <div className="footer-center">
           <p>Monday to Friday</p>
           <p>9:00 am to 5:00 pm</p>
-          <p>Hobart, Tasmania</p>
+          <p>20 Acton Crescent</p>
+          <p>Goodwood 7010</p>
         </div>
 
-        <div className="logo">
-          <img src="/Logo.png" alt="Goodwood Community Centre" />
-          </div>
-
+        {/* Social Icons */}
         <div className="footer-right">
           <h3>Follow us</h3>
-          <div className="social-icons">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook"></i>
+          <div className="social-buttons">
+            <a href="https://www.facebook.com/GoodwoodCommunityCentreTas" target="_blank" rel="noopener noreferrer">
+              <img src="/facebook.webp" alt="Facebook" className="social-icon" />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-linkedin"></i>
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-instagram"></i>
+            <a href="https://www.instagram.com/goodwoodcommunitycentre/" target="_blank" rel="noopener noreferrer">
+              <img src="/insta.png" alt="Instagram" className="social-icon" />
             </a>
           </div>
         </div>

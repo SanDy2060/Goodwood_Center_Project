@@ -67,6 +67,7 @@ const ServiceDetail = () => {
       <p>{service.description}</p>
       <p><strong>Day:</strong> {service.dayOfWeek}</p>
       <p><strong>Time:</strong> {service.startTime} – {service.endTime}</p>
+      {service.price > 0 && (<p><strong>Price:</strong> ${service.price} per hour</p>)}
       {service.maxSpots && <p><strong>Max Spots:</strong> {service.maxSpots}</p>}
       {service.image && (
   <img

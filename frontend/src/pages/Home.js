@@ -5,20 +5,55 @@ import "../styles/home.css";
 
 const Home = () => {
   const [nextEvent, setNextEvent] = useState(null);
+  const [upcomingServices, setUpcomingServices] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchNextEvent = async () => {
-      try {
-        const res = await axios.get("http://localhost:8000/api/events/upcoming/next");
-        console.log("📦 Upcoming event from backend:", res.data);
-        setNextEvent(res.data);
-      } catch (err) {
-        console.error("❌ Error fetching upcoming event:", err);
-      }
-    };
     fetchNextEvent();
+    fetchServices();
   }, []);
+
+  const fetchNextEvent = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/events/upcoming/next");
+      setNextEvent(res.data);
+    } catch (err) {
+      console.error("Error fetching upcoming event:", err);
+    }
+  };
+
+  const fetchServices = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/services");
+      const allServices = res.data;
+
+      const dayMap = {
+        sunday: 0,
+        monday: 1,
+        tuesday: 2,
+        wednesday: 3,
+        thursday: 4,
+        friday: 5,
+        saturday: 6,
+      };
+
+      const today = new Date().getDay();
+
+      const upcoming = allServices
+        .filter((service) => {
+          const day = service.dayOfWeek?.toLowerCase();
+          return dayMap[day] >= today;
+        })
+        .sort((a, b) => {
+          return dayMap[a.dayOfWeek?.toLowerCase()] - dayMap[b.dayOfWeek?.toLowerCase()];
+        })
+        .slice(0, 2);
+
+      setUpcomingServices(upcoming);
+    } catch (err) {
+      console.error("Error fetching services:", err);
+    }
+  };
 
   return (
     <div className="home-page">
@@ -78,7 +113,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Services & News Section */}
+      {/* Services Section */}
       <section className="services-news">
         <div className="services-content">
           <div className="services-text">
@@ -99,25 +134,24 @@ const Home = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Learners Program</td>
-                  <td>Free</td>
-                  <td>
-                    <button className="book-btn">Book Now</button>
-                  </td>
-                </tr>
+                {upcomingServices.map((service) => (
+                  <tr key={service._id}>
+                    <td>{service.name}</td>
+                    <td>{service.price ? `$${service.price}` : "Free"}</td>
+                    <td>
+                      <button onClick={() => navigate(`/service/${service._id}`)}>
+                        Book Now
+                      </button>
+                    </td>
+                  </tr>
+                ))}
                 <tr>
                   <td>Hall Hire</td>
                   <td>$50/hr</td>
                   <td>
-                    <button className="book-btn">Book Now</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Community Garden</td>
-                  <td>$20/hr</td>
-                  <td>
-                    <button className="book-btn">Book Now</button>
+                    <button className="book-btn" onClick={() => navigate("/halls")}>
+                      Book Now
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -125,42 +159,30 @@ const Home = () => {
           </div>
         </div>
 
-        {/* News & Updates Section */}
+        {/* News Section */}
         <div className="news-updates">
           <h2 className="news-title">News & Updates</h2>
           <p className="news-subtitle">Stay informed and engaged.</p>
-
           <div className="news-grid">
             <div className="news-item">
               <h3>Events</h3>
               <p className="news-heading">Upcoming Activities</p>
-              <p>
-                Join our latest community gatherings, celebrations, and local events happening at the
-                center.
-              </p>
+              <p>Join our latest community gatherings, celebrations, and local events happening at the center.</p>
             </div>
             <div className="news-item">
               <h3>Programs</h3>
               <p className="news-heading">Community Learning</p>
-              <p>
-                Explore a variety of educational and social programs designed to benefit all age
-                groups.
-              </p>
+              <p>Explore a variety of educational and social programs designed to benefit all age groups.</p>
             </div>
             <div className="news-item">
               <h3>Workshops</h3>
               <p className="news-heading">Skill Development</p>
-              <p>
-                Participate in hands-on workshops covering different skills, crafts, and hobbies.
-              </p>
+              <p>Participate in hands-on workshops covering different skills, crafts, and hobbies.</p>
             </div>
             <div className="news-item">
               <h3>Cultural Events</h3>
               <p className="news-heading">Celebrating Diversity</p>
-              <p>
-                Experience cultural performances, exhibitions, and activities representing diverse
-                communities.
-              </p>
+              <p>Experience cultural performances, exhibitions, and activities representing diverse communities.</p>
             </div>
           </div>
         </div>

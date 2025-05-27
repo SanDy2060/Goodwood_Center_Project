@@ -1,20 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../middleware/uploadMiddleware");
+const controller = require("../controllers/hallController");
 const auth = require("../middleware/authMiddleware");
 const admin = require("../middleware/adminMiddleware");
-const controller = require("../controllers/hallController");
+const upload = require("../middleware/uploadMiddleware");
 
-// Admin: create hall
+// 📌 Create a new hall (admin only)
 router.post("/", auth, admin, upload.single("image"), controller.createHall);
 
-// Public: get all halls
+// 📌 Get all halls (public)
 router.get("/", controller.getHalls);
 
-// Public: get one hall
+// 📌 Get a specific hall by ID (public)
 router.get("/:id", controller.getHallById);
 
-// Public: book hall
+// 📌 Delete a hall by ID (admin only)
+router.delete("/:id", auth, admin, controller.deleteHall);
+
 router.post("/:id/book", controller.bookHallSlot);
 
 module.exports = router;

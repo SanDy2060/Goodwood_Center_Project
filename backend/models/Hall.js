@@ -5,8 +5,9 @@ const hallSchema = new mongoose.Schema({
   location: { type: String },
   description: { type: String },
   image: { type: String, default: "" },
-  openingTime: { type: String, required: true },  // Format: "09:00"
-  closingTime: { type: String, required: true },  // Format: "18:00"
+  openingTime: { type: String, required: true },  
+  closingTime: { type: String, required: true },  
+  price: { type: Number, required: true, default: 0 },
   isActive: { type: Boolean, default: true },
 }, { timestamps: true });
 

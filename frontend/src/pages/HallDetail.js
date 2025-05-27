@@ -30,15 +30,18 @@ const HallDetail = () => {
 
   const handleBook = async () => {
     try {
+      console.log("📤 Sending booking:", { ...formData, date });
       await axios.post(`http://localhost:8000/api/halls/${id}/book`, {
         ...formData,
         date,
       });
       alert("Booking successful!");
     } catch (err) {
+      console.error("❌ Booking error:", err.response?.data || err.message);
       alert(err.response?.data?.msg || "Booking failed.");
     }
   };
+  
 
   if (!hall) return <div>Loading...</div>;
 
@@ -53,7 +56,7 @@ const HallDetail = () => {
         />
       )}
       <p><strong>Open:</strong> {hall.openingTime} – {hall.closingTime}</p>
-
+      <p><strong>Price:</strong> ${hall.price} per hour</p>
       <h3>Book This Hall</h3>
       <div className="form-group">
         <input type="text" name="userName" placeholder="Your Name" onChange={handleChange} />

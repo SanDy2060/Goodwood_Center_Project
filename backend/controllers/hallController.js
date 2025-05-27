@@ -2,13 +2,21 @@ const Hall = require("../models/Hall");
 const HallBooking = require("../models/HallBooking");
 const nodemailer = require("nodemailer");
 
-// Create a new hall
+// ✅ Create a new hall
 exports.createHall = async (req, res) => {
   try {
     const { name, location, description, openingTime, closingTime } = req.body;
     const image = req.file ? `/uploads/${req.file.filename}` : "";
 
-    const hall = new Hall({ name, location, description, openingTime, closingTime, image });
+    const hall = new Hall({
+      name,
+      location,
+      description,
+      openingTime,
+      closingTime,
+      image,
+    });
+
     await hall.save();
     res.status(201).json(hall);
   } catch (err) {
@@ -17,7 +25,7 @@ exports.createHall = async (req, res) => {
   }
 };
 
-// Get all halls
+// ✅ Get all active halls
 exports.getHalls = async (req, res) => {
   try {
     const halls = await Hall.find({ isActive: true }).sort({ name: 1 });
@@ -27,7 +35,7 @@ exports.getHalls = async (req, res) => {
   }
 };
 
-// Get specific hall details
+// ✅ Get one hall by ID
 exports.getHallById = async (req, res) => {
   try {
     const hall = await Hall.findById(req.params.id);
@@ -38,7 +46,19 @@ exports.getHallById = async (req, res) => {
   }
 };
 
-// Book a hall slot
+// ✅ Delete a hall (admin only)
+exports.deleteHall = async (req, res) => {
+  try {
+    const hall = await Hall.findByIdAndDelete(req.params.id);
+    if (!hall) return res.status(404).json({ msg: "Hall not found" });
+    res.json({ msg: "Hall deleted successfully" });
+  } catch (err) {
+    console.error("Delete hall error:", err);
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
+// ✅ Book a hall slot with 1hr minimum and no overlap
 exports.bookHallSlot = async (req, res) => {
   const { userName, userEmail, date, startTime, endTime, message } = req.body;
 
@@ -46,7 +66,7 @@ exports.bookHallSlot = async (req, res) => {
     const hall = await Hall.findById(req.params.id);
     if (!hall) return res.status(404).json({ msg: "Hall not found" });
 
-    // Validate 1-hour minimum
+    // Check 1-hour minimum
     const [startHour, startMin] = startTime.split(":").map(Number);
     const [endHour, endMin] = endTime.split(":").map(Number);
     const start = startHour * 60 + startMin;
@@ -56,7 +76,7 @@ exports.bookHallSlot = async (req, res) => {
       return res.status(400).json({ msg: "Minimum booking is 1 hour." });
     }
 
-    // Check for overlap
+    // Check for overlapping bookings
     const existing = await HallBooking.find({
       hall: hall._id,
       date,
@@ -69,11 +89,19 @@ exports.bookHallSlot = async (req, res) => {
       return res.status(400).json({ msg: "Selected time overlaps with existing booking." });
     }
 
-    // Save booking
-    const booking = new HallBooking({ hall: hall._id, userName, userEmail, date, startTime, endTime, message });
+    // Save the booking
+    const booking = new HallBooking({
+      hall: hall._id,
+      userName,
+      userEmail,
+      date,
+      startTime,
+      endTime,
+      message
+    });
     await booking.save();
 
-    // Send email to user and admin
+    // Email setup
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {

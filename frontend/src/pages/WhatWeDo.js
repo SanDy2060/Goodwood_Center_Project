@@ -99,7 +99,7 @@ const WhatWeDo = () => {
       {/* Additional static section for hall hire */}
       <div className="service-card">
         <div className="service-image">
-          <img src="/hall_preview.jpg" alt="Hall Hire" />
+          <img src="/group.png" alt="Hall Hire" />
         </div>
         <div className="service-info">
           <h3 className="service-title">Hire a Hall</h3>
@@ -145,6 +145,9 @@ const ServiceCard = ({ service, language, userRole }) => {
         <p className="service-time"><strong>Time:</strong> {service.startTime} – {service.endTime}</p>
         {service.maxSpots && (
           <p className="service-spots"><strong>Limited Spots:</strong> {service.maxSpots}</p>
+        )}
+        {service.price > 0 && (
+          <p className="service-price"><strong>Price:</strong> ${service.price}</p>
         )}
         {userRole === "admin" && (
           <p className="admin-label"></p>

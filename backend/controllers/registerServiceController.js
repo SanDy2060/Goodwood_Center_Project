@@ -22,49 +22,59 @@ exports.sendServiceRegistrationEmail = async (req, res) => {
       return res.status(404).json({ msg: "Service not found" });
     }
 
+    // Check if max spots are filled
     if (service.maxSpots && service.registrations.length >= service.maxSpots) {
       console.log("❌ Max spots reached");
       return res.status(400).json({ msg: "Service is fully booked" });
     }
 
+    // Push new registration
     service.registrations.push({ name, email, message });
     await service.save();
     console.log("✅ Registration saved to Service DB");
 
-    // ✅ Admin Email
-    console.log("📤 Sending admin email...");
+    const spotsLeft = service.maxSpots ? service.maxSpots - service.registrations.length : "N/A";
+
+    // ✅ Email to Admin
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: email,
-      subject: `Thank you for registering for ${service.name}`,
+      to: process.env.EMAIL_TO,
+      subject: `New Registration for ${service.name}`,
       html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-          <h2 style="color: #2c3e50;">Goodwood Community Centre</h2>
-          <p>Hi <strong>${name}</strong>,</p>
-          <p>Thank you for registering for the <strong>${service.name}</strong> service.</p>
-          <p>Here are your registration details:</p>
-          <ul>
-            <li><strong>Day:</strong> ${service.dayOfWeek}</li>
-            <li><strong>Time:</strong> ${service.startTime} – ${service.endTime}</li>
-            ${service.maxSpots ? `<li><strong>Spots Available:</strong> ${service.maxSpots - service.registrations.length}</li>` : ""}
-          </ul>
-          <p>If you have any questions, feel free to reply to this email.</p>
-          <p style="margin-top: 30px;">Warm regards,<br><strong>Goodwood Community Centre Team</strong></p>
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h3>New Service Registration Received</h3>
+          <p><strong>Service:</strong> ${service.name}</p>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          ${message ? `<p><strong>Message:</strong> ${message}</p>` : ""}
+          <p><strong>Day:</strong> ${service.dayOfWeek}</p>
+          <p><strong>Time:</strong> ${service.startTime} – ${service.endTime}</p>
+          ${service.price ? `<p><strong>Price:</strong> $${service.price}</p>` : ""}
+          ${service.maxSpots ? `<p><strong>Spots Remaining:</strong> ${spotsLeft}</p>` : ""}
         </div>
-      `
-    });    
+      `,
+    });
     console.log("✅ Admin email sent");
 
     // ✅ Confirmation Email to User
-    console.log("📤 Sending confirmation to user...");
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
       subject: `Thanks for registering for ${service.name}`,
       html: `
-        <p>Hi ${name},</p>
-        <p>Thank you for registering for <strong>${service.name}</strong>. We'll contact you if further details are needed.</p>
-        <p>– Goodwood Community Centre</p>
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <p>Hi <strong>${name}</strong>,</p>
+          <p>Thank you for registering for the <strong>${service.name}</strong> service at Goodwood Community Centre.</p>
+          <p>Here are your booking details:</p>
+          <ul>
+            <li><strong>Day:</strong> ${service.dayOfWeek}</li>
+            <li><strong>Time:</strong> ${service.startTime} – ${service.endTime}</li>
+            ${service.price ? `<li><strong>Price:</strong> $${service.price}</li>` : ""}
+            ${service.maxSpots ? `<li><strong>Spots Remaining:</strong> ${spotsLeft}</li>` : ""}
+          </ul>
+          <p>We look forward to seeing you!</p>
+          <p>— Goodwood Community Centre</p>
+        </div>
       `,
     });
     console.log("✅ User confirmation email sent");
