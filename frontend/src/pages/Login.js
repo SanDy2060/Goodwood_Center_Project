@@ -19,7 +19,7 @@ const Login = () => {
     try {
       const res = await axios.post("http://localhost:8000/api/auth/login", form);
       localStorage.setItem("token", res.data.token); // Store JWT
-      navigate("/dashboard"); // Redirect after login
+      navigate("/"); // Redirect after login
     } catch (err) {
       setError(err.response?.data?.msg || "Login failed. Please try again.");
     }

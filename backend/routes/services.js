@@ -138,7 +138,7 @@ router.put("/:id", adminMiddleware, upload.single("image"), async (req, res) => 
 });
 
 // 🔐 Delete a service
-router.delete("/:id", adminMiddleware, async (req, res) => {
+router.delete("/:id", authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const deleted = await Service.findByIdAndDelete(req.params.id);
     if (!deleted) return res.status(404).json({ msg: "Service not found" });

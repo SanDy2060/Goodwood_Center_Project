@@ -1,3 +1,4 @@
+/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -46,8 +47,61 @@
   background: #0a6f23;
 }
 
+/* Main Layout Styles (matches EventDetail) */
+.event-details-container {
+  max-width: 1400px;
+  margin: 30px auto;
+  padding: 30px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.event-details-container h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.event-details-container p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.event-details-container img {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  max-height: 450px;
+  object-fit: cover;
+  display: block;
+  margin: 25px auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.join-button {
+  display: block;
+  width: 200px;
+  margin: 30px auto 0;
+  background-color: #0d8e2c;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.join-button:hover {
+  background-color: #0a6f23;
+}
+
 .full-booked-msg {
   color: red;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 20px;
+  text-align: center;
 }

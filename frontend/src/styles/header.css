@@ -51,25 +51,6 @@
   border-radius: 4px;
 }
 
-/* Centered search bar */
-.search-bar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  z-index: 1;
-}
-
-.search-bar input {
-  padding: 8px;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  width: 500px;
-}
-
 /* Bottom nav links row */
 .nav-links {
   display: flex;

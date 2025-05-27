@@ -147,7 +147,7 @@ const ServiceCard = ({ service, language, userRole }) => {
           <p className="service-spots"><strong>Limited Spots:</strong> {service.maxSpots}</p>
         )}
         {userRole === "admin" && (
-          <p className="admin-label">(Admin View Only — delete handled in admin page)</p>
+          <p className="admin-label"></p>
         )}
         <Link to={`/service/${service._id}`} className="join-button">
           View Details

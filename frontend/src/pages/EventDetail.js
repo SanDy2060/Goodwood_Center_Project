@@ -64,7 +64,14 @@ const EventDetails = () => {
       <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
       <p><strong>Location:</strong> {event.location}</p>
       <p><strong>Price:</strong> ${event.price}</p>
-      {event.image && <img src={`http://localhost:8000${event.image}`} alt={event.title} />}
+      {event.image && (
+  <img
+    src={`http://localhost:8000${event.image}`}
+    alt={event.title}
+    className="event-detail-image"
+  />
+)}
+
       <button onClick={() => setShowForm(true)} className="join-button">Join Event</button>
 
       {/* Join Form Modal */}

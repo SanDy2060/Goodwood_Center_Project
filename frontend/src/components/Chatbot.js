@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import '../styles/chatbot.css';
 
@@ -10,15 +11,15 @@ const Chatbot = () => {
 
   const faqs = [
     { question: 'What services do you offer?', answer: 'We offer events, weekly programs, hall bookings, hairstyle, and support.' },
-    { question: 'Where are you located?', answer: 'Hobart, Tasmania.' },
+    { question: 'Where are you located?', answer: 'Tasmania.' },
     { question: 'What are your opening hours?', answer: 'We’re open 9AM–5PM, Mon–Fri.' },
-    { question: 'How can I contact you?', answer: 'You can contact us through email or phone. Check the contact section or bottom of the website.' },
+    { question: 'How can I contact you?', answer: 'You can contact us through the Contact Us page or call us at +1234567890.' },
   ];
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
     if (!isOpen && !hasGreeted) {
-      setMessages([{ sender: 'bot', text: "I'm here to help! Choose an option below or type your question." }]);
+      setMessages([{ sender: 'bot', text: "I'm here to help! Choose an FAQ or type your question." }]);
       setHasGreeted(true);
     }
   };
@@ -27,29 +28,22 @@ const Chatbot = () => {
     if (!input.trim()) return;
 
     const userMessage = { sender: 'user', text: input };
+    setMessages(prev => [...prev, userMessage]);
+
     const faqAnswer = faqs.find(faq => faq.question.toLowerCase() === input.toLowerCase());
+    const botReply = faqAnswer 
+      ? faqAnswer.answer 
+      : "I'm not sure how to answer that. Please visit our Contact Us page or call us at +1234567890.";
 
-    setMessages(prev => [
-      ...prev,
-      userMessage,
-      {
-        sender: 'bot',
-        text: faqAnswer
-          ? faqAnswer.answer
-          : "I don't have an answer for this question. Please contact us at 04424242424 for more information."
-      }
-    ]);
-
+    setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
     setInput('');
     setIsFAQVisible(false);
   };
 
   const handleFAQSelection = (faq) => {
-    setMessages(prev => [
-      ...prev,
-      { sender: 'user', text: faq.question },
-      { sender: 'bot', text: faq.answer }
-    ]);
+    const faqMessage = { sender: 'user', text: faq.question };
+    const botAnswer = { sender: 'bot', text: faq.answer };
+    setMessages(prev => [...prev, faqMessage, botAnswer]);
     setIsFAQVisible(false);
   };
 
@@ -57,50 +51,44 @@ const Chatbot = () => {
 
   return (
     <div className="chatbot-container">
-      {/* Launcher Button */}
       {!isOpen && (
-        <div className="chat-button-wrapper">
-          <svg width="120" height="120" viewBox="0 0 120 120" className="chat-curved-svg">
+        <div className="chatbot-button-wrapper">
+          <svg width="120" height="120" viewBox="0 0 120 120" className="chatbot-curve-svg">
             <defs>
               <path id="curve" d="M 20,60 a 40,40 0 1,1 80,0" fill="transparent" />
             </defs>
             <text width="100%">
-              <textPath xlinkHref="#curve" startOffset="50%" textAnchor="middle" className="chat-curved-text">
+              <textPath xlinkHref="#curve" startOffset="50%" textAnchor="middle" className="curve-text">
                 👋 Here we are!!
               </textPath>
             </text>
           </svg>
-          <button onClick={toggleChat} className="chat-launch-button">💬</button>
+          <button onClick={toggleChat} className="chat-toggle-button">💬</button>
         </div>
       )}
 
-      {/* Chatbox */}
       {isOpen && (
-        <div className="chatbox">
+        <div className="chat-box">
           <div className="chat-header">
             Hi 👋 How can I assist you?
-            <button onClick={toggleChat} className="chat-close-btn">×</button>
+            <button onClick={toggleChat} className="chat-close-button">×</button>
           </div>
 
-          <div className="faq-toggle-container">
-            <button onClick={toggleFAQ} className="chat-faq-toggle">FAQ</button>
+          <div className="faq-toggle-wrapper">
+            <button onClick={toggleFAQ} className="faq-button">FAQ</button>
           </div>
 
           <div className="chat-messages">
             {messages.map((msg, i) => (
-              <div key={i} className={msg.sender === 'user' ? 'chat-user-msg' : 'chat-bot-msg'}>
-                {msg.text}
-              </div>
+              <div key={i} className={msg.sender === 'user' ? 'chat-msg user' : 'chat-msg bot'}>{msg.text}</div>
             ))}
           </div>
 
           {isFAQVisible && (
-            <div className="chat-faq-container">
-              <div className="chat-faq-header">Frequently Asked Questions:</div>
+            <div className="faq-container">
+              <div className="faq-header">Frequently Asked Questions:</div>
               {faqs.map((faq, i) => (
-                <button key={i} onClick={() => handleFAQSelection(faq)} className="chat-faq-button">
-                  {faq.question}
-                </button>
+                <button key={i} onClick={() => handleFAQSelection(faq)} className="faq-option">{faq.question}</button>
               ))}
             </div>
           )}
@@ -112,7 +100,7 @@ const Chatbot = () => {
               placeholder="Ask me something..."
               className="chat-input"
             />
-            <button onClick={handleSend} className="chat-send-btn">Send</button>
+            <button onClick={handleSend} className="chat-send-button">Send</button>
           </div>
         </div>
       )}

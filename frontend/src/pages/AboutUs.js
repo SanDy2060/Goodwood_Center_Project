@@ -5,12 +5,12 @@ import '../styles/aboutUs.css';
 const AboutUs = () => {
   return (
     <div className="container">
-      <div className="header">Our Community Center Vision</div>
+      <div className="header">Goodwood's Vision</div>
 
       {/* Vision Section */}
       <div className="content" id="vision">
         <div className="image-container">
-          <img src="photo.avif" alt="Community Center" />
+          <img src="community.png" alt="Community Center" />
         </div>
         <div className="text-container">
           <h2>Connecting Community Through Diversity</h2>
@@ -23,7 +23,6 @@ const AboutUs = () => {
       </div>
 
       {/* Mission Section */}
-      {/* Mission Section */}
         <div class="mission-section" id="mission">
           <div class="mission-content">
             <h2 class="mission-title">Community's Mission</h2>
@@ -33,8 +32,8 @@ const AboutUs = () => {
             </p>
           </div>
           <div class="mission-images">
-            <img src="photo.avif" alt="Community Mission 1" />
-            <img src="photo.avif" alt="Community Mission 2" />
+            <img src="community.png" alt="Community Mission 1" />
+            <img src="mission.png" alt="Community Mission 2" />
           </div>
         </div>
 
@@ -44,13 +43,12 @@ const AboutUs = () => {
       <div className="history-section" id="history">
         <h1 className="history-title">Our Community Center History</h1>
         <div className="image-grid">
-          <img src="photo.avif" alt="Community History" />
-          <img src="photo.avif" alt="Seminar"/>
-          <img src="photo.avif" alt="Seminar"/>
-          <img src="photo.avif" alt="Seminar"/>
-          <img src="photo.avif" alt="Seminar"/>
-          <img src="photo.avif" alt="Seminar"/>
-          
+          <img src="chritmas.png" alt="Community History" />
+          <img src="seminar.png" alt="Seminar"/>
+          <img src="donation.png" alt="Seminar"/>
+          <img src="vegetable.png" alt="Seminar"/>
+          <img src="van.png" alt="Seminar"/>
+          <img src="workshop.png" alt="Seminar"/>
         </div>
       </div>
 
@@ -66,7 +64,7 @@ const AboutUs = () => {
             </p>
           </div>
           <div className="empower-image">
-            <img src="photo.avif" alt="Community gathering at Goodwood Community Center" />
+            <img src="group.png" alt="Community gathering at Goodwood Community Center" />
           </div>
         </div>
       </div>
@@ -82,7 +80,7 @@ const AboutUs = () => {
             <p>Sarah brings a wealth of experience in organizing community events and managing programs that cater to all age groups. Her passion for community engagement and creativity drives the success of our center's initiatives.</p>
           </div>
           <div className="team-image">
-            <img src="photo.avif" alt="Sarah Johnson" />
+            <img src="sarah.png" alt="Sarah Johnson" />
           </div>
         </div>
 
@@ -92,7 +90,7 @@ const AboutUs = () => {
             <p>David is dedicated to curating diverse and engaging cultural programs that celebrate the richness of our community. His innovative ideas and artistic vision bring a unique flair to our center's offerings.</p>
           </div>
           <div className="team-image">
-            <img src="photo.avif" alt="David Lee" />
+            <img src="david.png" alt="David Lee" />
           </div>
         </div>
 
@@ -102,7 +100,7 @@ const AboutUs = () => {
             <p>Aisha oversees our recreational and fitness services, ensuring that our members have access to top-notch facilities and programs. Her commitment to health and well-being inspires our community to lead active and fulfilling lives.</p>
           </div>
           <div className="team-image">
-            <img src="photo.avif" alt="Aisha Patel" />
+            <img src="aisha.png" alt="Aisha Patel" />
           </div>
         </div>
       </div>

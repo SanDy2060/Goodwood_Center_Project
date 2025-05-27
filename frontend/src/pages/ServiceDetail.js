@@ -68,7 +68,12 @@ const ServiceDetail = () => {
       <p><strong>Day:</strong> {service.dayOfWeek}</p>
       <p><strong>Time:</strong> {service.startTime} – {service.endTime}</p>
       {service.maxSpots && <p><strong>Max Spots:</strong> {service.maxSpots}</p>}
-      {service.image && <img src={`http://localhost:8000${service.image}`} alt={service.name} />}
+      {service.image && (
+  <img
+    src={`http://localhost:8000${service.image}`}
+    alt={service.name}
+  />
+)}
 
       {/* Spots Available or Join Button */}
       {spotsLeft !== null && spotsLeft <= 0 ? (
