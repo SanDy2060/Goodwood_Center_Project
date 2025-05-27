@@ -1,4 +1,3 @@
-/* Reset default styling */
 * {
   margin: 0;
   padding: 0;
@@ -99,53 +98,68 @@
 
 .nav-links a:hover,
 .nav-links .logout-btn:hover {
-  color: #0d8e2c;
+  color: #18083b;
   text-decoration: underline;
 }
 
 .nav-links .active {
   font-weight: bold;
-  color: #0d8e2c;
+  color: #14144b;
 }
 
-/* Login/Register Dropdown */
+/* Dropdown menu for login/register and account/logout */
 .nav-dropdown {
   position: relative;
   font-size: 18px;
   font-weight: normal;
   color: black;
+  margin-left: 15px;
+  cursor: pointer;
 }
 
 .dropdown-label {
-  cursor: pointer;
+  font-weight: bold;
+  padding: 6px 10px;
+  display: inline-block;
 }
 
 .dropdown-menu {
   display: none;
   position: absolute;
   background-color: white;
-  min-width: 160px;
   top: 100%;
   left: 0;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+  z-index: 10;
   border-radius: 6px;
+  min-width: 160px;
   overflow: hidden;
+  padding: 10px 0;
 }
 
-.dropdown-menu a {
+.dropdown-menu a,
+.dropdown-menu .logout-btn {
   display: block;
   padding: 10px 14px;
-  color: black;
   font-size: 16px;
+  color: black;
   text-decoration: none;
+  width: 100%;
+  text-align: left;
 }
 
-.dropdown-menu a:hover {
+.dropdown-menu a:hover,
+.dropdown-menu .logout-btn:hover {
   background-color: #f0f0f0;
   color: #0d8e2c;
 }
 
+/* Show menu on hover */
 .nav-dropdown:hover .dropdown-menu {
   display: block;
+}
+
+/* Optional hover underline for dropdown label */
+.nav-dropdown:hover .dropdown-label {
+  text-decoration: underline;
 }

@@ -70,7 +70,7 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-            <div className="password-hint">At least 6 characters recommended</div>
+            <div className="password-hint">Password must be at least 8 characters and include uppercase, lowercase, number, and special character</div>
           </div>
 
           <button

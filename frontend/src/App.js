@@ -4,7 +4,6 @@ import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import WhatWeDo from './pages/WhatWeDo';
 import Events from './pages/Events';
-import Gallery from './pages/Gallery';
 import CommunityEngagement from './pages/CommunityEngagement';
 import ContactUs from './pages/ContactUs';
 import MembershipDonation from './pages/MembershipDonation';
@@ -21,6 +20,9 @@ import ServiceDetail from './pages/ServiceDetail';
 import AdminHalls from './pages/AdminHalls';
 import HallList from './pages/HallList';
 import HallDetail from './pages/HallDetail';
+import Chatbot from './components/Chatbot';
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -35,7 +37,6 @@ function App() {
         <Route path="/admin/services" element={<PrivateRoute><AdminServices /></PrivateRoute>} />
         <Route path="/Events" element={<Events />} />
         <Route path="/event/:id" element={<EventDetails />} />
-        <Route path="/Gallery" element={<Gallery />} />
         <Route path="/CommunityEngagement" element={<CommunityEngagement />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/MembershipDonation" element={<MembershipDonation />} />
@@ -46,7 +47,10 @@ function App() {
         <Route path="/halls" element={<HallList />} />
         <Route path="/halls/:id" element={<HallDetail />} />
         <Route path="/admin/halls" element={<PrivateRoute><AdminHalls /></PrivateRoute>} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
+      <Chatbot />
       <Footer />
       </div>
     </Router>

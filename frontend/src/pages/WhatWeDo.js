@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import "../styles/whatWeDo.css";
 
-// Helper function to translate text
+// Helper function for translation
 const translateText = async (text, targetLang = "en") => {
   try {
     const res = await axios.post("https://libretranslate.de/translate", {
@@ -39,8 +39,12 @@ const WhatWeDo = () => {
 
     const token = localStorage.getItem("token");
     if (token) {
-      const decoded = jwtDecode(token);
-      setUserRole(decoded.role || (decoded.isAdmin ? "admin" : "user"));
+      try {
+        const decoded = jwtDecode(token);
+        setUserRole(decoded.role || (decoded.isAdmin ? "admin" : "user"));
+      } catch (err) {
+        console.error("Invalid token");
+      }
     }
 
     fetchServices();
@@ -54,7 +58,7 @@ const WhatWeDo = () => {
     <div className="what-we-do-page">
       <h1 className="section-title">What We Do</h1>
 
-      {/* Admin-only Add button */}
+      {/* Admin-only button */}
       {userRole === "admin" && (
         <div className="text-center mb-4">
           <Link to="/admin/services" className="add-event-button">
@@ -80,7 +84,7 @@ const WhatWeDo = () => {
         </select>
       </div>
 
-      {/* Service List */}
+      {/* Services Grid */}
       <div className="services-grid">
         {services.map((service) => (
           <ServiceCard
@@ -92,23 +96,23 @@ const WhatWeDo = () => {
         ))}
       </div>
 
-          <div className="service-card">
-      <div className="service-image">
-        <img src="/hall_preview.jpg" alt="Hall Hire" />
-      </div>
-      <div className="service-info">
-        <h3 className="service-title">Hire a Hall</h3>
-        <p className="service-description">
-          Need a venue for your event? Explore our bookable community halls — perfect for meetings, parties, and gatherings.
-        </p>
-        <Link to="/halls" className="join-button">View Available Halls</Link>
+      {/* Additional static section for hall hire */}
+      <div className="service-card">
+        <div className="service-image">
+          <img src="/hall_preview.jpg" alt="Hall Hire" />
+        </div>
+        <div className="service-info">
+          <h3 className="service-title">Hire a Hall</h3>
+          <p className="service-description">
+            Need a venue for your event? Explore our bookable community halls — perfect for meetings, parties, and gatherings.
+          </p>
+          <Link to="/halls" className="join-button">View Available Halls</Link>
+        </div>
       </div>
     </div>
-    </div>    
   );
 };
 
-// Component to render each service with translation
 const ServiceCard = ({ service, language, userRole }) => {
   const [translatedDesc, setTranslatedDesc] = useState(service.description);
 
@@ -146,13 +150,11 @@ const ServiceCard = ({ service, language, userRole }) => {
           <p className="admin-label">(Admin View Only — delete handled in admin page)</p>
         )}
         <Link to={`/service/${service._id}`} className="join-button">
-            View Details
-            </Link>
+          View Details
+        </Link>
       </div>
     </div>
   );
-
-
 };
 
 export default WhatWeDo;

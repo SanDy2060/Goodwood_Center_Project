@@ -1,0 +1,147 @@
+.chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.chatbox {
+  width: 300px;
+  height: 430px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.chat-header {
+  background-color: #E6E6FA;
+  padding: 10px 15px;
+  font-weight: bold;
+  font-size: 15px;
+  position: relative;
+}
+
+.chat-close-btn {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #fafafa;
+}
+
+.chat-user-msg {
+  text-align: right;
+  background-color: #D1E7DD;
+  margin: 4px 0;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.chat-bot-msg {
+  text-align: left;
+  background-color: #F8D7DA;
+  margin: 4px 0;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.chat-faq-toggle {
+  background-color: #9370DB;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.chat-faq-container {
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-top: 1px solid #ccc;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.chat-faq-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.chat-faq-button {
+  background-color: #E6E6FA;
+  color: #333;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  margin: 5px 0;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+}
+
+.chat-input-row {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #eee;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-right: 8px;
+}
+
+.chat-send-btn {
+  background-color: #9370DB;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.chat-button-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.chat-curved-svg {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.chat-launch-button {
+  background-color: #9b30ff;
+  color: #fff;
+  font-size: 22px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 10;
+  margin-top: -10px;
+}

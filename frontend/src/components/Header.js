@@ -1,21 +1,33 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 import "../styles/header.css";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
-  }, []);
+
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUserRole(decoded.role || (decoded.isAdmin ? "admin" : "user"));
+      } catch (err) {
+        console.error("Invalid token");
+      }
+    }
+  }, [location]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     navigate("/");
-    window.location.reload(); // Refresh to re-render the nav state
+    window.location.reload();
   };
 
   return (
@@ -35,7 +47,6 @@ const Header = () => {
         </div>
 
         <div className="search-bar">
-          <span className="material-symbols-outlined"></span>
           <input type="text" placeholder="Search..." />
         </div>
       </div>
@@ -45,13 +56,24 @@ const Header = () => {
         <NavLink to="/aboutUs" className={({ isActive }) => isActive ? "active" : ""}>About Us</NavLink>
         <NavLink to="/whatWeDo" className={({ isActive }) => isActive ? "active" : ""}>What We Do</NavLink>
         <NavLink to="/events" className={({ isActive }) => isActive ? "active" : ""}>Events</NavLink>
-        <NavLink to="/gallery" className={({ isActive }) => isActive ? "active" : ""}>Gallery</NavLink>
         <NavLink to="/communityEngagement" className={({ isActive }) => isActive ? "active" : ""}>Community Engagement</NavLink>
         <NavLink to="/contactUs" className={({ isActive }) => isActive ? "active" : ""}>Contact Us</NavLink>
         <NavLink to="/membershipDonation" className={({ isActive }) => isActive ? "active" : ""}>Membership & Donation</NavLink>
 
+        {/* Admin-only link */}
+        {userRole === "admin" && (
+          <NavLink to="/admin/events" className={({ isActive }) => isActive ? "active" : ""}>
+            Manage Events
+          </NavLink>
+        )}
+
         {isLoggedIn ? (
-          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+          <div className="nav-dropdown">
+            <span className="dropdown-label">Account ▾</span>
+            <div className="dropdown-menu">
+              <button onClick={handleLogout} className="logout-btn">Logout</button>
+            </div>
+          </div>
         ) : (
           <div className="nav-dropdown">
             <span className="dropdown-label">Login/Register ▾</span>

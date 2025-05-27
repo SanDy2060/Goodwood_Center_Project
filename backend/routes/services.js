@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Service = require("../models/Service");
 const adminMiddleware = require("../middleware/adminMiddleware");
-const upload = require("../middleware/uploadMiddleware"); // For image uploads
+const upload = require("../middleware/uploadMiddleware");
 const authMiddleware = require("../middleware/authMiddleware");
+const nodemailer = require("nodemailer");
 const { sendServiceRegistrationEmail } = require("../controllers/registerServiceController");
 
-
-// 🔓 Public: Get all active services
+// 🔓 Get all active services
 router.get("/", async (req, res) => {
   try {
     const services = await Service.find({ isActive: true }).sort({ dayOfWeek: 1, startTime: 1 });
@@ -17,10 +17,10 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 🔐 Admin: Create a new service
+// 🔐 Create a new service
 router.post("/", authMiddleware, adminMiddleware, upload.single("image"), async (req, res) => {
   try {
-    const { name, description, dayOfWeek, startTime, endTime, maxSpots } = req.body;
+    const { name, description, dayOfWeek, startTime, endTime, maxSpots, type, hallSlots } = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : "";
 
     const newService = new Service({
@@ -30,6 +30,8 @@ router.post("/", authMiddleware, adminMiddleware, upload.single("image"), async 
       startTime,
       endTime,
       maxSpots: maxSpots || null,
+      type: type || "regular",
+      hallSlots: type === "hall" ? JSON.parse(hallSlots || "[]") : [],
       image: imageUrl,
     });
 
@@ -37,31 +39,77 @@ router.post("/", authMiddleware, adminMiddleware, upload.single("image"), async 
     res.status(201).json(newService);
   } catch (err) {
     console.error("❌ Error creating service:", err);
-    if (!res.headersSent) {
-      res.status(500).json({ msg: "Failed to create service", error: err.message });
-
-    }
+    res.status(500).json({ msg: "Failed to create service", error: err.message });
   }
 });
 
-// 🔍 Get a single service by ID
+// 🔐 Book a hall slot
+router.post("/:id/book-slot", async (req, res) => {
+  const { slotIndex, name, email, message } = req.body;
+
+  try {
+    const service = await Service.findById(req.params.id);
+    if (!service || service.type !== "hall") {
+      return res.status(404).json({ msg: "Hall not found" });
+    }
+
+    const slot = service.hallSlots[slotIndex];
+    if (!slot || slot.isBooked) {
+      return res.status(400).json({ msg: "Slot already booked or invalid" });
+    }
+
+    // Save booking
+    service.hallSlots[slotIndex].isBooked = true;
+    service.hallSlots[slotIndex].bookedBy = { name, email, message };
+    await service.save();
+
+    // Email Confirmation
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: `Hall Booking Confirmation – ${service.name}`,
+      html: `
+        <p>Hi ${name},</p>
+        <p>Your hall booking is confirmed for:</p>
+        <ul>
+          <li><strong>Date:</strong> ${slot.date}</li>
+          <li><strong>Time:</strong> ${slot.startTime} – ${slot.endTime}</li>
+          <li><strong>Location:</strong> ${service.name}</li>
+        </ul>
+        <p>Thank you,<br>Goodwood Community Centre</p>
+      `,
+    });
+
+    res.json({ msg: "Booking confirmed!" });
+  } catch (err) {
+    console.error("❌ Booking error:", err);
+    res.status(500).json({ msg: "Booking failed", error: err.message });
+  }
+});
+
+// 🔍 Get a single service
 router.get("/:id", async (req, res) => {
   try {
     const service = await Service.findById(req.params.id);
-    if (!service) {
-      return res.status(404).json({ msg: "Service not found" });
-    }
+    if (!service) return res.status(404).json({ msg: "Service not found" });
     res.json(service);
   } catch (err) {
     res.status(500).json({ msg: "Error fetching service", error: err.message });
   }
 });
 
-
-// 🔐 Admin: Update a service
+// 🔐 Update a service
 router.put("/:id", adminMiddleware, upload.single("image"), async (req, res) => {
   try {
-    const { name, description, dayOfWeek, startTime, endTime, maxSpots, isActive } = req.body;
+    const { name, description, dayOfWeek, startTime, endTime, maxSpots, isActive, type, hallSlots } = req.body;
 
     const updateData = {
       name,
@@ -71,6 +119,8 @@ router.put("/:id", adminMiddleware, upload.single("image"), async (req, res) => 
       endTime,
       maxSpots: maxSpots || null,
       isActive,
+      type,
+      hallSlots: type === "hall" ? JSON.parse(hallSlots || "[]") : [],
     };
 
     if (req.file) {
@@ -87,7 +137,7 @@ router.put("/:id", adminMiddleware, upload.single("image"), async (req, res) => 
   }
 });
 
-// 🔐 Admin: Delete a service
+// 🔐 Delete a service
 router.delete("/:id", adminMiddleware, async (req, res) => {
   try {
     const deleted = await Service.findByIdAndDelete(req.params.id);
@@ -98,23 +148,7 @@ router.delete("/:id", adminMiddleware, async (req, res) => {
   }
 });
 
-// POST: Register for a service
+// 🔓 Register for regular service
 router.post("/:id/register", sendServiceRegistrationEmail);
-
-
-
-// 🔍 Get a single service by ID
-router.get("/:id", async (req, res) => {
-  try {
-    const service = await Service.findById(req.params.id);
-    if (!service) {
-      return res.status(404).json({ msg: "Service not found" });
-    }
-    res.json(service);
-  } catch (err) {
-    res.status(500).json({ msg: "Error fetching service", error: err.message });
-  }
-});
-
 
 module.exports = router;
